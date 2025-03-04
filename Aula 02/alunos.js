@@ -6,7 +6,7 @@ class Turma{
     #alunos;
     #qtdadeAlunos;
 
-    constructo(nroTurma, nomeProfessor, vagas){
+    constructor(nroTurma, nomeProfessor, vagas){
         validate(arguments, ["Number", "String", "Number"]);
         if(nroTurma<=0 || nomeProfessor.length == 0 || vagas <= 0){
             this.#numero = -1;

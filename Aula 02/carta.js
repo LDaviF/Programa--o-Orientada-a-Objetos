@@ -18,11 +18,11 @@ class Carta{
     }
 
     valores(){
-        return['A', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+        return['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
     }
 
     naipes(){
-        return ['Ouros', 'Paus', 'Espadas', 'Copas '];
+        return ['ouros', 'paus', 'espadas', 'copas'];
     }
 
     toInt(){
@@ -46,9 +46,8 @@ class Carta{
         return this.naipes().includes(naipe);
     }
 
-    verificaNaipe(valor){
+    verificaValor(valor){
         validate(arguments, ["String"]);
-        valor = valor.toLowerCase();
         return this.valores().includes(valor);
     }
 
@@ -56,10 +55,84 @@ class Carta{
         return this.#naipe; 
     }
 
-    set naipe()
+    set naipe(n){
+        if (!this.verificaNaipe(n)){
+            this.#naipe = "inválido";
+        } else {
+            this.#naipe = n;
+        }
+    }
 
+    get valor(){
+        return this.#valor;
+    }
 
+    set valor(val){
+        if (!this.verificaValor(val)){
+            this.#valor = "invalido";
 
+        }else{
+            this.#valor = val;
+        }
+    }
 
+    virada(){
+        return !this.#faceParaCima
+    }
+
+    vira(){
+        this.#faceParaCima = !this.#faceParaCima;
+    }
+
+    toString(){
+        if(this.#naipe === 'invalido' || this.#valor === 'invalido'){
+            return 'Carta inválida';
+
+        }
+        let str = `${this.#valor}, ${this.#naipe}`;
+        return str;
+    }
 
 }
+
+
+
+class Baralho{
+    #cartas;
+    #topo;
+
+    constructor(){
+        this.#cartas = new Array(52);
+        let aux = new Carta('ouros', 'A');
+        let naipes = aux.naipes();
+        let valores = aux.valores();
+
+        let c = null;
+
+        this.#topo = 0;
+        for(let n=0; n<naipes.length; n++){
+            for(let v=0; v<valores.length; v++){
+                c = new Carta(naipes[n], valores[v]);
+                this.#cartas[this.#topo] = c;
+                this.#topo++;
+            }
+        }
+
+    }
+
+    toString(){
+        let str = `Quantidade: ${this.#topo}`;
+        for(let i=0; i<this.#topo;i++){
+            str = str + `[${this.#cartas[i].toString()}]`;
+
+        }
+        return str + '\n';
+
+    }
+
+    
+}
+
+let b = new Baralho();
+console.log(b.toString());
+
